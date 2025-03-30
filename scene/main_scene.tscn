@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://bju4uuyksd1gc"]
+
+[ext_resource type="Script" path="res://script/main_scene.gd" id="1_sq4bn"]
+[ext_resource type="Texture2D" uid="uid://cocuulshic3qg" path="res://image/enviroment/pointer.png" id="2_0cwyv"]
+[ext_resource type="Texture2D" uid="uid://bavbm145xfdb8" path="res://image/enviroment/sky.png" id="3_1c648"]
+[ext_resource type="Shader" path="res://cloud.gdshader" id="4_mbumk"]
+[ext_resource type="Texture2D" uid="uid://c3t2f0mbwhsku" path="res://image/enviroment/cloud.png" id="5_rj5sp"]
+[ext_resource type="Texture2D" uid="uid://ddv3sqjdo60xp" path="res://image/enviroment/bottom.png" id="6_oneks"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6i8m6"]
+size = Vector2(398, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sqcq4"]
+shader = ExtResource("4_mbumk")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ybluc"]
+outline_size = 1
+outline_color = Color(0.243137, 0.243137, 0.243137, 1)
+
+[node name="main_scene" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_sq4bn")
+
+[node name="floor" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(86, 90)
+shape = SubResource("RectangleShape2D_6i8m6")
+
+[node name="Bottom" type="Sprite2D" parent="floor"]
+position = Vector2(80, 23)
+texture = ExtResource("6_oneks")
+
+[node name="camera" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="pointer" type="Sprite2D" parent="camera"]
+position = Vector2(156, 0)
+texture = ExtResource("2_0cwyv")
+offset = Vector2(0, 4)
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="background" type="ParallaxBackground" parent="."]
+
+[node name="sky" type="ParallaxLayer" parent="background"]
+motion_mirroring = Vector2(0, 146)
+
+[node name="sky" type="Sprite2D" parent="background/sky"]
+position = Vector2(80, 0)
+texture = ExtResource("3_1c648")
+
+[node name="cloud" type="Sprite2D" parent="background/sky"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_sqcq4")
+position = Vector2(80, 48)
+texture = ExtResource("5_rj5sp")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="game_over" type="Label" parent="UI"]
+visible = false
+offset_right = 160.0
+offset_bottom = 96.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_ybluc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

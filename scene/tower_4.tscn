@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://6pjt80m82qec"]
+
+[ext_resource type="Script" path="res://script/tower.gd" id="1_d1joe"]
+[ext_resource type="Texture2D" uid="uid://1c5enfwm4ux1" path="res://image/tower/tower4.png" id="1_wny7e"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y44te"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2msk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1btj"]
+size = Vector2(22, 22)
+
+[node name="tower_4" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_y44te")
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, 24)
+script = ExtResource("1_d1joe")
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_wny7e")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_c2msk")
+
+[node name="area" type="Area2D" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="area"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_k1btj")
+debug_color = Color(0.98004, 0.140663, 0, 0.42)
+
+[connection signal="body_entered" from="area" to="." method="_on_area_body_entered"]

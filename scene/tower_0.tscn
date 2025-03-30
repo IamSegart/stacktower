@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0orqm0wh57sb"]
+
+[ext_resource type="Script" path="res://script/tower.gd" id="1_8h7gr"]
+[ext_resource type="Texture2D" uid="uid://d1pci4h2kgt7s" path="res://image/tower/tower0.png" id="1_jidvr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5k121"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2msk"]
+size = Vector2(32, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5v3df"]
+size = Vector2(32, 13)
+
+[node name="tower_0" type="RigidBody2D"]
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_5k121")
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, 24)
+script = ExtResource("1_8h7gr")
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_jidvr")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c2msk")
+
+[node name="area" type="Area2D" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="area"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_5v3df")
+debug_color = Color(0.98004, 0.140663, 0, 0.42)
+
+[connection signal="body_entered" from="area" to="." method="_on_area_body_entered"]
